@@ -55,4 +55,5 @@ Gemfile.lock
 
 /*.png
 
+## vscode setting file
 /.vscode/
