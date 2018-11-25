@@ -86,12 +86,12 @@ class TableAction < ActiveRecord::Base
   end
 
   def self.create_user_rate_all_mode(user, rate_hash)
-    user.rates.create(player_rate: rate_hash[:"solo"]      , player_id: user.player_id, mode_id: 1)
-    user.rates.create(player_rate: rate_hash[:"solo-fpp"]  , player_id: user.player_id, mode_id: 2)
-    user.rates.create(player_rate: rate_hash[:"duo"]       , player_id: user.player_id, mode_id: 3)
-    user.rates.create(player_rate: rate_hash[:"duo-fpp"]   , player_id: user.player_id, mode_id: 4)
-    user.rates.create(player_rate: rate_hash[:"squad"]     , player_id: user.player_id, mode_id: 5)
-    user.rates.create(player_rate: rate_hash[:"squad-fpp"] , player_id: user.player_id, mode_id: 6)
+    user.rates.create(player_rate: rate_hash[:"solo"]      , mode_id: 1)
+    user.rates.create(player_rate: rate_hash[:"solo-fpp"]  , mode_id: 2)
+    user.rates.create(player_rate: rate_hash[:"duo"]       , mode_id: 3)
+    user.rates.create(player_rate: rate_hash[:"duo-fpp"]   , mode_id: 4)
+    user.rates.create(player_rate: rate_hash[:"squad"]     , mode_id: 5)
+    user.rates.create(player_rate: rate_hash[:"squad-fpp"] , mode_id: 6)
   end
 
   def self.update_user_rate_all_mode(user, rate_hash)

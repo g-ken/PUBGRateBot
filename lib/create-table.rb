@@ -5,7 +5,6 @@ class CreateTable < ActiveRecord::Base
     unless File.exist?(database_name)
       ActiveRecord::Migration.create_table :rates do |t|
         t.integer :player_rate
-        t.integer :player_id
         t.integer :user_id
         t.integer :mode_id
         t.timestamps
