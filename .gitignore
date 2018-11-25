@@ -54,3 +54,5 @@ Gemfile.lock
 /db/*.sqlite3-journal
 
 /*.png
+
+/.vscode/
