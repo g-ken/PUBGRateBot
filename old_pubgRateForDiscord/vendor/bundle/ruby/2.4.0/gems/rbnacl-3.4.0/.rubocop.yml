@@ -1,0 +1,32 @@
+#
+# Style
+#
+
+# TODO: turn this down
+LineLength:
+  Max: 150
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/SpaceBeforeFirstArg:
+  Enabled: false
+
+Style/GlobalVars:
+  Enabled: false
+
+#
+# Metrics
+#
+
+Metrics/MethodLength:
+  Max: 22
+
+Metrics/AbcSize:
+  Max: 20
+
+AllCops:
+  Include:
+    - '**/Rakefile'
+  Exclude:
+    - 'spec/**/*'

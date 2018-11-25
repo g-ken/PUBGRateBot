@@ -1,0 +1,13 @@
+current directory: /home/riki/Desktop/pubgRateForDiscord/vendor/bundle/ruby/2.4.0/gems/json-2.1.0/ext/json
+/home/riki/.rbenv/versions/2.4.4/bin/ruby -r ./siteconf20181112-28945-dwxmg4.rb extconf.rb
+creating Makefile
+
+current directory: /home/riki/Desktop/pubgRateForDiscord/vendor/bundle/ruby/2.4.0/gems/json-2.1.0/ext/json
+make "DESTDIR=" clean
+
+current directory: /home/riki/Desktop/pubgRateForDiscord/vendor/bundle/ruby/2.4.0/gems/json-2.1.0/ext/json
+make "DESTDIR="
+make: 'all' に対して行うべき事はありません.
+
+current directory: /home/riki/Desktop/pubgRateForDiscord/vendor/bundle/ruby/2.4.0/gems/json-2.1.0/ext/json
+make "DESTDIR=" install

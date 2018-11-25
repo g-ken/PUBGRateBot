@@ -1,0 +1,23 @@
+current directory: /home/riki/Desktop/pubgRateForDiscord/vendor/bundle/ruby/2.4.0/gems/unf_ext-0.0.7.5/ext/unf_ext
+/home/riki/.rbenv/versions/2.4.4/bin/ruby -r ./siteconf20181112-28945-1u5sp74.rb extconf.rb
+checking for -lstdc++... yes
+creating Makefile
+
+current directory: /home/riki/Desktop/pubgRateForDiscord/vendor/bundle/ruby/2.4.0/gems/unf_ext-0.0.7.5/ext/unf_ext
+make "DESTDIR=" clean
+
+current directory: /home/riki/Desktop/pubgRateForDiscord/vendor/bundle/ruby/2.4.0/gems/unf_ext-0.0.7.5/ext/unf_ext
+make "DESTDIR="
+compiling unf.cc
+cc1plus: warning: command line option ‘-Wimplicit-int’ is valid for C/ObjC but not for C++
+cc1plus: warning: command line option ‘-Wdeclaration-after-statement’ is valid for C/ObjC but not for C++
+cc1plus: warning: command line option ‘-Wimplicit-function-declaration’ is valid for C/ObjC but not for C++
+cc1plus: warning: unrecognized command line option ‘-Wno-self-assign’
+cc1plus: warning: unrecognized command line option ‘-Wno-constant-logical-operand’
+cc1plus: warning: unrecognized command line option ‘-Wno-parentheses-equality’
+cc1plus: warning: unrecognized command line option ‘-Wno-tautological-compare’
+linking shared-object unf_ext.so
+
+current directory: /home/riki/Desktop/pubgRateForDiscord/vendor/bundle/ruby/2.4.0/gems/unf_ext-0.0.7.5/ext/unf_ext
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 unf_ext.so ./.gem.20181112-28945-gyi6oo
