@@ -9,6 +9,7 @@
 /test/tmp/
 /test/version_tmp/
 /tmp/
+/old_pubgRateForDiscord
 
 # Used by dotenv library to load environment variables.
 .env
@@ -57,4 +58,3 @@ Gemfile.lock
 
 ## vscode setting file
 /.vscode/
-/old_pubgRateForDiscord
