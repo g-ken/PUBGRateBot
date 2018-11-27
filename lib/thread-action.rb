@@ -6,13 +6,10 @@ require_relative '../models/mode'
 
 class ThreadAction < ActiveRecord::Base
   def self.initialize_create_or_update_rate_action(api_key,season_id)
-    #puts 'test2'
-    ActiveRecord::Base.connection_pool.with_connection do
-      #puts 'test3'
-      User.all.each do |user|
-        #puts 'test4'
-        self.create_or_update_rate(api_key, user, season_id)
-      end
+    #puts 'test3'
+    User.all.each do |user|
+      #puts 'test4'
+      self.create_or_update_rate(api_key, user, season_id)
     end
   end
 

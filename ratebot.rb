@@ -31,14 +31,16 @@ class PUBGBot
     ActiveRecord::Base.establish_connection(YAML.load_file("config/database.yml")["default"])
     CreateTable.create(YAML.load_file("config/database.yml")["default"]["database"])
     @season_id = TableAction.get_current_season_id(API_KEY)
-
+    
     Thread.new do
       #puts 'test0'
       loop do
-        #puts 'test01'
-        ThreadAction.execute_each_sec(SLEEP_SEC) do ||
-          #puts 'test1'
-          ThreadAction.initialize_create_or_update_rate_action(API_KEY, @season_id)
+        #puts 'test1'
+        ThreadAction.execute_each_sec(SLEEP_SEC.to_i) do ||
+          #puts 'test2'
+          ActiveRecord::Base.connection_pool.with_connection do
+            ThreadAction.initialize_create_or_update_rate_action(API_KEY, @season_id)
+          end
         end
       end
     end
