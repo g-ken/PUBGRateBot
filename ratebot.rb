@@ -113,6 +113,10 @@ class PUBGBot
         event.send_message "Wrong number of arguments . Check !help command"
       end
     end
+
+    @bot.command :help do |event|
+      ThreadAction.initialize_create_or_update_rate_action(API_KEY, @season_id)
+    end
   end
 end
 

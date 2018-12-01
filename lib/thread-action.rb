@@ -29,7 +29,7 @@ class ThreadAction < ActiveRecord::Base
   end
 
   def self.is_rate_created_at_today?(rate_date)
-    return true if rate_date == Date.today
+    return true if rate_date == Date.parse(Time.now.utc.strftime("%Y-%m-%d"))
     return false
   end
 

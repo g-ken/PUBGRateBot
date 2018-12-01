@@ -9,7 +9,7 @@ class CreateGruff < ActiveRecord::Base
     mode = Mode.find_by(play_mode: mode)
     oldest_date = Date.parse(User.all.order(created_at: :ASC).first.created_at.strftime("%Y-%m-%d"))
     User.all.each do |user|
-      g.data user.player_name, self.get_user_rate_from_oldest_to_now(mode.id, user, oldest_date)  
+      g.data user.player_name, self.get_user_rate_from_oldest_to_now(mode.id, user, oldest_date)
     end
     g.labels = self.get_rate_date_oldest_and_now(oldest_date)
     g.write('gruff.png')
