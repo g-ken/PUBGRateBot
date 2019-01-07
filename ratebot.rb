@@ -19,11 +19,11 @@ Dotenv.load
 
 class PUBGBot
   attr_accessor :bot, :season_id
-  TOKEN = ENV['TOKEN']
+  TOKEN     = ENV['TOKEN']
   CLIENT_ID = ENV['CLIENT_ID']
-  DB = ENV['DATABASE']
-  PREFIX = ENV['PREFIX']
-  API_KEY = ENV['API_KEY']
+  DB        = ENV['DATABASE']
+  PREFIX    = ENV['PREFIX']
+  API_KEY   = ENV['API_KEY']
   SLEEP_SEC = ENV['SLEEP_SEC']
 
   def initialize
