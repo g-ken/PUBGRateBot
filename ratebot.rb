@@ -18,6 +18,12 @@ require_relative 'lib/thread-action'
 Dotenv.load
 
 class PUBGBot
+  
+  include ValidArgs
+  include ThreadAction
+  include TableAction
+  include CreateGruff
+
   attr_accessor :bot, :season_id
   TOKEN     = ENV['TOKEN']
   CLIENT_ID = ENV['CLIENT_ID']

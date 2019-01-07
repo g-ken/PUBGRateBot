@@ -1,7 +1,7 @@
 require_relative '../models/mode'
 require_relative '../models/user'
 
-class ValidArgs < ActiveRecord::Base
+module ValidArgs
   class << self
     def is_args_larger_than_number?(args, number)
       return true if args.length > number

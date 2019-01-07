@@ -3,7 +3,7 @@ require_relative '../models/rate'
 require_relative '../models/user'
 require_relative '../models/mode'
 
-class TableAction < ActiveRecord::Base
+module TableAction
   include PUBGApi
   class << self
     def add_user_to_db(api_key, player_name, season_id)

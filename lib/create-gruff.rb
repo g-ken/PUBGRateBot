@@ -2,7 +2,7 @@ require_relative '../models/rate'
 require_relative '../models/user'
 require_relative '../models/mode'
 
-class CreateGruff < ActiveRecord::Base
+module CreateGruff
   def self.create_gruff_all_user(mode)
     g = Gruff::Line.new
     users = Array.new
