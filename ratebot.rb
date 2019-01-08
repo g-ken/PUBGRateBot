@@ -116,12 +116,34 @@ class PUBGBot
           event.send_message "Wrong status of argument."
         end
       else
-        event.send_message "Wrong number of arguments . Check !help command"
+        event.send_message "Wrong number of arguments. Check !help command"
       end
     end
 
     @bot.command :help do |event|
       ThreadAction.initialize_create_or_update_rate_action(API_KEY, @season_id)
+    end
+
+    @bot.command :daily do |event, mode, *args|
+      if ValidArgs.is_args_equal_number?(args, 0)
+        if ValidArgs.is_exist_mode?(mode)
+          CreateGruff.create_gruff_daily_all_user(mode)
+          event.send_message "Success"
+          event.send_file(File.open('daily.gruff.png', 'r'))
+        else
+          event.send_message "Wrong status of argument."
+        end
+      elsif ValidArgs.is_args_larger_than_number?(args, 0)
+        if ValidArgs.is_exist_mode?(mode) && ValidArgs.is_exist_player?(args)
+          CreateGruff.create_gruff_daily_soecific_user(mode, args)
+          event.send_message "Success"
+          event.send_file(File.opne('gruff.png', 'r'))
+        else
+          event.send_message "Wrong status of argument"
+        end
+      else
+        event.send_message "Wrong number of arguments. check !help command"
+      end
     end
   end
 end
