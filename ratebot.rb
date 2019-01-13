@@ -124,6 +124,10 @@ class PUBGBot
       ThreadAction.initialize_create_or_update_rate_action(API_KEY, @season_id)
     end
 
+    @bot.command :test do |event|
+      puts event.server
+    end
+
     @bot.command :daily do |event, mode, *args|
       if ValidArgs.is_args_equal_number?(args, 0)
         if ValidArgs.is_exist_mode?(mode)

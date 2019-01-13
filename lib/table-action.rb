@@ -1,7 +1,6 @@
 require_relative 'pubg-api'
 require_relative '../models/rate'
 require_relative '../models/user'
-require_relative '../models/mode'
 
 module TableAction
   include PUBGApi
@@ -101,6 +100,10 @@ module TableAction
       user.rates.where(mode_id: 4).order(created_at: :DESC).first.update(player_rate: rate_hash[:"duo-fpp"])
       user.rates.where(mode_id: 5).order(created_at: :DESC).first.update(player_rate: rate_hash[:"squad"])
       user.rates.where(mode_id: 6).order(created_at: :DESC).first.update(player_rate: rate_hash[:"squad-fpp"])
+    end
+
+    def init_server(event)
+      
     end
   end
 end

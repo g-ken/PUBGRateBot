@@ -1,5 +1,8 @@
-class CreateTable < ActiveRecord::Base
-  #ＤＢがなければ作成
+require_relative '../models/server'
+require_relative '../models/server_user'
+require_relative '../models/user'
+require_relative 'pubgapi'
+module Table
   class << self
     def create(database_name)
       unless File.exist?(database_name)
@@ -7,7 +10,7 @@ class CreateTable < ActiveRecord::Base
           t.string :server_id
         end
 
-        ActiveRecord::Migration.create_table :server_user do |t|
+        ActiveRecord::Migration.create_table :servers_users do |t|
           t.belongs_to :server, index: true
           t.belongs_to :user, index: true
         end
@@ -30,6 +33,18 @@ class CreateTable < ActiveRecord::Base
           t.string :discord_id
         end
       end
+    end
+
+    def init_server(server_id)
+      server = Server.find_or_initialize_by(server_id: server_id)
+      server.update_attributes(
+        server_id:  server_id
+      )
+    end
+
+    def add_user_id_to_db(server_id, name)
+      server = Server.find_or_initialize_by(server_id: server_id)
+      server.users.create({name: name})
     end
   end
 end
