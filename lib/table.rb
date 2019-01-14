@@ -62,14 +62,49 @@ module PUBGRateBot
         end
       end 
 
-      def get_rate(server_id, pubg_name)
-        server = Server.find_by(server_id: server_id)
-        server.users.find_by(name: pubg_name)
+      def get_rate(server_id, pubg_name, embed)
+        user = Server.find_by(server_id: server_id).users.find_by(name: pubg_name)
+        retrieve_user_rate(user, embed)
       end
 
       private
       def exists_relational_user?(server, pubg_name)
         return server.users.exists?(name: pubg_name)
+      end
+
+      def retrieve_user_rate(user, embed)
+        embed.colour = 0x00FFFF
+        embed.description = "#{user.name}'s rate"
+        embed.add_field(
+          name: "TPP solo",
+          value: "#{user.rates.where(mode_id: 1).last.rate}",
+          inline: true
+        )
+        embed.add_field(
+          name: "TPP duo",
+          value: "#{user.rates.where(mode_id: 3).last.rate}",
+          inline: true
+        )
+        embed.add_field(
+          name: "TPP squad",
+          value: "#{user.rates.where(mode_id: 5).last.rate}",
+          inline: true
+        )
+        embed.add_field(
+          name: "FPP solo",
+          value: "#{user.rates.where(mode_id: 2).last.rate}",
+          inline: true
+        )
+        embed.add_field(
+          name: "FPP duo",
+          value: "#{user.rates.where(mode_id: 4).last.rate}",
+          inline: true
+        )
+        embed.add_field(
+          name: "FPP squad",
+          value: "#{user.rates.where(mode_id: 6).last.rate}",
+          inline: true
+        )
       end
     end
   end
