@@ -1,4 +1,5 @@
 require 'httpclient'
+require_relative './shape'
 
 module PUBGRateBot
   class PUBGApi
@@ -8,19 +9,19 @@ module PUBGRateBot
       def feach_player_state(pubg_name)
         url  =  BASE_URL + "players?filter[playerNames]=" + pubg_name
         data =  request_data(url)
-        is_correct_res?(data) ? data : nil
+        Shape.extract_account_id(data) if is_correct_res?(data)
       end
 
       def feach_season
         url  =  BASE_URL + "seasons"
         data =  request_data(url)
-        is_correct_res?(data) ? data : nil
+        Shape.extract_season_id(data) if is_correct_res?(data)
       end
 
       def feach_player_season_state(player_id, season_id)
         url  =  BASE_URL + "players/" + player_id + "/seasons/" + season_id.to_s
         data =  request_data(url)
-        is_correct_res?(data) ? data : nil
+        Shape.extract_rate_hash(data) if is_correct_res?(data)
       end
 
       private

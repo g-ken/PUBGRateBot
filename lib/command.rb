@@ -16,6 +16,10 @@ module PUBGRateBot
         Table.get_rate(event.server.id, pubg_name)
       end
 
+      @bot.command :test do |event, pubg_name|
+        Table.add_rate(event.server.id, pubg_name)
+      end
+
       @bot.command :create_day do |event, date = nil|
         CreateGruff.create_today(event.server.id, date)
       end
