@@ -21,20 +21,16 @@ module PUBGRateBot
       @bot.command :test do |event, pubg_name|
       end
 
-      @bot.command :create_day do |event, date = nil|
-        CreateGruff.create_today(event.server.id, date)
+      @bot.command :create_day do |event, mode, date|
+        CreateGruff.create_day(event.server.id, mode, date)
       end
 
-      @bot.command :create_week do |event|
-        CreateGruff.create_week(event.server.id)
+      @bot.command :create_week do |event, mode|
+        CreateGruff.create_week(event.server.id, mode)
       end
 
-      @bot.command :create_week do |event|
-        CreateGruff.create_week(event.server.id)
-      end
-
-      @bot.command :create_total do |event|
-        CreateGruff.create_total(event.server.id)
+      @bot.command :create_total do |event, mode|
+        CreateGruff.create_total(event.server.id, mode)
       end
     end
     
