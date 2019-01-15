@@ -23,7 +23,9 @@ module PUBGRateBot
         end
       end
 
-      @bot.command :test do |event, pubg_name|
+      @bot.command :create do |event, mode|
+        CreateGruff.create_total(event.server.id, mode)
+        event.send_file(File.open("#{File.expand_path("../..", __FILE__) + '/picture/' + event.server.id.to_s + '_' + Date.today.to_s + '_' + mode + '_total.png'}", 'r'))
       end
 
       @bot.command :create_day do |event, mode, date = Date.today|
