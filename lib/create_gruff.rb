@@ -53,7 +53,16 @@ module PUBGRateBot
           data = Array.new
           7.times do |i|
             rate = user.rates.where(["create_at = ? and mode_id = ?", date, MODE_HASH[mode]]).last
-            data << (rate.nil? ? nil : rate.rate)
+            if rate.nil?
+              data << nil
+            else
+              if rate.rate == 0
+                data << nil
+              else
+                data << rate.rate
+              end
+            end
+            #data << (rate.nil? ? nil : rate.rate)
             labels.store(i, date.strftime("%m/%d"))
             date += 1
           end
@@ -70,7 +79,16 @@ module PUBGRateBot
           data = Array.new
           (oldest..Date.today).each.with_index(2) do |date, index|
             rate = user.rates.where(["create_at = ? and mode_id = ?", date, MODE_HASH[mode]]).last
-            data << (rate.nil? ? nil : rate.rate)
+            if rate.nil?
+              data << nil
+            else
+              if rate.rate == 0
+                data << nil
+              else
+                data << rate.rate
+              end
+            end
+            #data << (rate.nil? ? nil : rate.rate)
             labels.store(index, nil)
           end
           g.data(user.name, data)
