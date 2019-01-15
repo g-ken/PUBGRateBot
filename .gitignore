@@ -56,6 +56,6 @@ Gemfile.lock
 
 /*.png
 
-/picture
+/picture/*
 ## vscode setting file
 /.vscode/
