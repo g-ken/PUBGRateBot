@@ -3,6 +3,7 @@ require_relative './shape'
 
 module PUBGRateBot
   class PUBGApi
+    @@season_id = nil
     BASE_URL =  "https://api.pubg.com/shards/steam/"
     API_KEY  =  ENV['API_KEY']
     class << self
@@ -15,13 +16,22 @@ module PUBGRateBot
       def feach_season
         url  =  BASE_URL + "seasons"
         data =  request_data(url)
-        Shape.extract_season_id(data) if is_correct_res?(data)
+        @@season_id = Shape.extract_season_id(data) if is_correct_res?(data)
       end
 
-      def feach_player_season_state(player_id, season_id)
-        url  =  BASE_URL + "players/" + player_id + "/seasons/" + season_id.to_s
+      def feach_player_season_state(player_id)
+        url  =  BASE_URL + "players/" + player_id + "/seasons/" + @@season_id.to_s
         data =  request_data(url)
+        puts data.status
         Shape.extract_rate_hash(data) if is_correct_res?(data)
+      end
+
+      def season_id
+        @@season_id
+      end
+    
+      def season_id=(val)
+        @@season_id = val
       end
 
       private

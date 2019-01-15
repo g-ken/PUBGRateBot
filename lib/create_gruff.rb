@@ -9,11 +9,10 @@ module PUBGRateBot
       MODE_HASH= {'solo' => '1', 'solo-fpp' => '2', 'duo' => '3', 'duo-fpp' => '4', 'squad' => '5', 'squad-fpp' => '6'}
 
       def create_day(server_id, mode, date)
-        date ||= Date.today
         g = Gruff::Line.new
         users = Server.find_by(server_id: server_id).users
         get_day_rate(users, g, date, mode)
-        g.labels = {0 => Date.today}
+        g.labels = {0 => date}
         g.title = "#{mode} day rate"
         g.write("#{'./picture/' + server_id.to_s + '_' + date.to_s + '_' + mode + '_day.png'}")
       end

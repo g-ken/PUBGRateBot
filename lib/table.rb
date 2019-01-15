@@ -55,8 +55,7 @@ module PUBGRateBot
       end
 
       def add_rate(user)
-        season_id  =  PUBGApi.feach_season
-        data       =  PUBGApi.feach_player_season_state(user.player_id, season_id)
+        data       =  PUBGApi.feach_player_season_state(user.player_id)
         data.each_value.with_index(1) do |a_data, index|
           user.rates.create(rate: a_data, mode_id: index, create_at: Date.today)
         end
@@ -67,12 +66,21 @@ module PUBGRateBot
         retrieve_user_rate(user, embed)
       end
 
+      def check_rate_difference_and_create(user)
+        rates = PUBGApi.feach_player_season_state(user.player_id)
+        rates.each_value.with_index(1) do |rate, index|
+          puts "#{rate.to_i} == #{user.rates.where(["create_at = ? and mode_id = ?", Date.today, index]).last.rate}"
+          user.rates.create(rate: rate, mode_id: index, create_at: Date.today) unless rate == user.rates.where(["create_at = ? and mode_id = ?", Date.today, index]).last
+        end
+      end
+
       private
       def exists_relational_user?(server, pubg_name)
         return server.users.exists?(name: pubg_name)
       end
 
       def retrieve_user_rate(user, embed)
+        embed.title = "PUBG Rate"
         embed.colour = 0x00FFFF
         embed.description = "#{user.name}'s rate"
         embed.add_field(
