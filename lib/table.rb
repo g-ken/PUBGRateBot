@@ -49,8 +49,11 @@ module PUBGRateBot
           end
         else
           player_id  =  PUBGApi.feach_player_state(pubg_name)
-          user       =  server.users.create({name: pubg_name, player_id: player_id, create_at: Date.today})
-          add_rate(user)
+          unless player_id.nil?
+            user       =  server.users.create({name: pubg_name, player_id: player_id, create_at: Date.today})
+            add_rate(user)
+          end
+          nil
         end
       end
 

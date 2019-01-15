@@ -10,7 +10,11 @@ module PUBGRateBot
       def feach_player_state(pubg_name)
         url  =  BASE_URL + "players?filter[playerNames]=" + pubg_name
         data =  request_data(url)
-        Shape.extract_account_id(data) if is_correct_res?(data)
+        if is_correct_res?(data)
+          return Shape.extract_account_id(data) 
+        else
+          return nil
+        end
       end
 
       def feach_season
@@ -23,7 +27,11 @@ module PUBGRateBot
         url  =  BASE_URL + "players/" + player_id + "/seasons/" + @@season_id.to_s
         data =  request_data(url)
         puts data.status
-        Shape.extract_rate_hash(data) if is_correct_res?(data)
+        if is_correct_res?(data)
+          return Shape.extract_rate_hash(data)
+        else
+          return nil
+        end
       end
 
       def season_id
