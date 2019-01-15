@@ -72,7 +72,7 @@ module PUBGRateBot
       def check_rate_difference_and_create(user)
         rates = PUBGApi.feach_player_season_state(user.player_id)
         rates.each_value.with_index(1) do |rate, index|
-          puts "#{rate.to_i} == #{user.rates.where(["create_at = ? and mode_id = ?", Date.today, index]).last.rate}"
+          puts "#{user.name}'s rate  #{rate.to_i} == #{user.rates.where(["create_at = ? and mode_id = ?", Date.today, index]).last.rate} = #{rate.to_i == user.rates.where(["create_at = ? and mode_id = ?", Date.today, index]).last.rate}"
           user.rates.create(rate: rate, mode_id: index, create_at: Date.today) unless rate == user.rates.where(["create_at = ? and mode_id = ?", Date.today, index]).last
         end
       end
