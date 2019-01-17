@@ -7,6 +7,8 @@ TOKEN     = ENV['TOKEN']
 CLIENT_ID = ENV['CLIENT_ID']
 PREFIX    = ENV['PREFIX']
 
+log = Logger.new('./log/bot_log')
+
 module PUBGRateBot
   DB        = ENV['DATABASE']
   API_KEY   = ENV['API_KEY']
