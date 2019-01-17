@@ -36,7 +36,7 @@ module PUBGRateBot
       def update_user_rate
         User.find_each(batch_size: 5) do |user|
           Table.check_rate_difference_and_create(user)
-          sleep(2500)
+          sleep(150)
         end
       end
 
