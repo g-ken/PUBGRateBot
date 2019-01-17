@@ -8,15 +8,13 @@ Dotenv.load
 module PUBGRateBot
   class ThreadAction
     class << self
-      def every_minute_update_user_rate
+      def five_minute_update_user_rate
         ActiveRecord::Base.connection_pool.with_connection do
           Thread.new do
             loop do
-              execute_each_sec(ENV['SLEEP_SEC'].to_i) do
-                puts 'start update_user_rate'
-                update_user_rate
-                puts 'finish update_user_rate'
-              end
+              puts 'start update_user_rate'
+              update_user_rate
+              puts 'finish update_user_rate'
             end
           end
         end
@@ -38,6 +36,7 @@ module PUBGRateBot
       def update_user_rate
         User.find_each(batch_size: 5) do |user|
           Table.check_rate_difference_and_create(user)
+          sleep(2500)
         end
       end
 
