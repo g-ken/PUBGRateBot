@@ -44,29 +44,35 @@ module PUBGRateBot
         server = Server.find_or_create_by(server_id: server_id)
         server.update_attributes(server_id: server_id)
         if User.exists?(name: pubg_name)
-          unless exists_relational_user?(server, pubg_name)
+          unless server.users.exists?(name: pubg_name)
             server.users << User.find_by(name: pubg_name)
+            return "Success."
+          else
+            return "Already relational."
           end
         else
           player_id  =  PUBGApi.feach_player_state(pubg_name)
           unless player_id.nil?
-            user       =  server.users.create({name: pubg_name, player_id: player_id, create_at: Date.today})
-            add_rate(user)
+            user = User.new(name: pubg_name, player_id: player_id, create_at: Date.today)
+            if user.save
+              server.users << user
+              return "Success"
+            else
+              return "Faild. try again later."
+            end
+          else
+            return "Not found player or limit request. Check name and try agein one minute later."
           end
-          nil
         end
       end
 
-      def add_rate(user)
-        data       =  PUBGApi.feach_player_season_state(user.player_id)
-        data.each_value.with_index(1) do |a_data, index|
-          user.rates.create(rate: a_data, mode_id: index, create_at: Date.today)
-        end
-      end 
-
       def get_rate(server_id, pubg_name, embed)
         user = Server.find_by(server_id: server_id).users.find_by(name: pubg_name)
-        retrieve_user_rate(user, embed)
+        unless user.nil?
+          return retrieve_user_rate(user, embed)
+        else
+          return "Not found player"
+        end
       end
 
       def check_rate_difference_and_create(user)
@@ -78,9 +84,6 @@ module PUBGRateBot
       end
 
       private
-      def exists_relational_user?(server, pubg_name)
-        return server.users.exists?(name: pubg_name)
-      end
 
       def retrieve_user_rate(user, embed)
         embed.title = "PUBG Rate"
