@@ -85,6 +85,11 @@ module PUBGRateBot
 
       private
 
+      def check_response(data)
+        case data.status
+          
+      end
+
       def retrieve_user_rate(user, embed)
         embed.title = "PUBG Rate"
         embed.colour = 0x00FFFF
