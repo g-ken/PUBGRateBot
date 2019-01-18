@@ -5,10 +5,12 @@ require_relative '../models/server_user'
 require_relative '../models/user'
 require_relative '../models/rate'
 require_relative './pubg_api'
+require_relative './shape'
 
 module PUBGRateBot
-  class Table
+  Table = Class.new do
     class << self
+      log = Logger.new("./log/bot_log")
       def create(database_name)
         unless File.exist?(database_name)
           ActiveRecord::Migration.create_table :servers do |t|
@@ -51,7 +53,8 @@ module PUBGRateBot
             return "Already relational."
           end
         else
-          player_id  =  PUBGApi.feach_player_state(pubg_name)
+          data      = PUBGApi.feach_player_state(pubg_name)
+          player_id = Shape.extract_account_id(data)
           unless player_id.nil?
             user = User.new(name: pubg_name, player_id: player_id, create_at: Date.today)
             if user.save
@@ -75,15 +78,61 @@ module PUBGRateBot
         end
       end
 
+      def update_user_rate
+        queue = Queue.new
+        User.all.each do |user|
+          queue.enqueue(user)
+          puts "enqueue #{user.name}"
+        end
+        while !queue.empty? do
+          user = queue.dequeue
+          "feach #{user.name}"
+          check_rate_difference_and_create(user)
+          sleep(10)
+        end
+        puts "end update user rate"
+      end
+
       def check_rate_difference_and_create(user)
-        rates = PUBGApi.feach_player_season_state(user.player_id)
-        rates.each_value.with_index(1) do |rate, index|
-          puts "#{user.name}'s rate  #{rate.to_i} == #{user.rates.where(["create_at = ? and mode_id = ?", Date.today, index]).last.rate} = #{rate.to_i == user.rates.where(["create_at = ? and mode_id = ?", Date.today, index]).last.rate}"
-          user.rates.create(rate: rate, mode_id: index, create_at: Date.today) unless rate.to_i == user.rates.where(["create_at = ? and mode_id = ?", Date.today, index]).last.rate.to_i
+        data = PUBGApi.feach_player_season_state(user.player_id)
+        rates = Shape.extract_rate_hash(check_response(data))
+        unless rates.nil?
+          rates.each_value.with_index(1) do |rate, index|
+            user_rate = user.rates.where(["create_at = ? and mode_id = ?", Date.today, index])
+            puts "user.name = #{user_rate.last}"
+            if user_rate.last.nil?
+              user.rates.create(rate: rate, mode_id: index, create_at: Date.today)
+            elsif rate.to_i != user_rate.last.rate.to_i
+              user.rates.create(rate: rate, mode_id: index, create_at: Date.today)
+            end
+          end
+        else
+          queue.enqueue(user)
         end
       end
 
       private
+
+      define_method :check_response do |data|
+        case data.status
+        when 200
+          log.info('success')
+          return data
+        when 401
+          log.warn('API key invalid or missing')
+          return nil
+        when 404
+          log.warn('The specified resource was not found')
+          return nil
+        when 415
+          log.warn('Content type incorrect or not specified')
+          return nil
+        when 429
+          log.warn('Too many requests')
+          return nil
+        end
+          
+      end
 
       def retrieve_user_rate(user, embed)
         embed.title = "PUBG Rate"
