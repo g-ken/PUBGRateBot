@@ -6,6 +6,7 @@ require_relative '../models/user'
 require_relative '../models/rate'
 require_relative './pubg_api'
 require_relative './shape'
+require_relative './queue'
 
 module PUBGRateBot
   Table = Class.new do
@@ -90,7 +91,6 @@ module PUBGRateBot
           check_rate_difference_and_create(user)
           sleep(10)
         end
-        puts "end update user rate"
       end
 
       def check_rate_difference_and_create(user)
@@ -99,7 +99,6 @@ module PUBGRateBot
         unless rates.nil?
           rates.each_value.with_index(1) do |rate, index|
             user_rate = user.rates.where(["create_at = ? and mode_id = ?", Date.today, index])
-            puts "user.name = #{user_rate.last}"
             if user_rate.last.nil?
               user.rates.create(rate: rate, mode_id: index, create_at: Date.today)
             elsif rate.to_i != user_rate.last.rate.to_i
