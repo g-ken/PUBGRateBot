@@ -24,7 +24,6 @@ module PUBGRateBot
         Thread.new do
           loop do
             execute_each_sec(3600) do
-              puts 'start feach_season'
               PUBGApi.feach_season
               puts "finish feach_season #{PUBGApi.season_id}"
             end
@@ -36,7 +35,6 @@ module PUBGRateBot
       def update_user_rate
         User.find_each(batch_size: 5) do |user|
           Table.check_rate_difference_and_create(user)
-          sleep(150)
         end
       end
 
