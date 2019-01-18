@@ -8,11 +8,11 @@ module PUBGRateBot
     class << self
       def five_minute_update_user_rate
         ActiveRecord::Base.connection_pool.with_connection do
-          #Thread.new do
+          Thread.new do
             loop do
               Table.update_user_rate
             end
-          #end
+          end
         end
       end
 

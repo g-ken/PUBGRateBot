@@ -11,6 +11,7 @@ module PUBGRateBot
 
       ThreadAction.every_hour_update_season_id
       sleep(5)
+      puts "update_user_rate"
       ThreadAction.five_minute_update_user_rate
 
       @bot.command :add do |event, pubg_name|
