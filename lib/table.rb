@@ -87,7 +87,7 @@ module PUBGRateBot
         end
         while !queue.empty? do
           user = queue.dequeue
-          "feach #{user.name}"
+          puts "feach #{user.name}"
           check_rate_difference_and_create(user)
           sleep(10)
         end
