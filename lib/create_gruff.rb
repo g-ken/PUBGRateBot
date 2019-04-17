@@ -19,7 +19,6 @@ module PUBGRateBot
 
       def create_week(server_id, mode)
         g = Gruff::Line.new
-        labels = Hash.new
         users = Server.find_by(server_id: server_id).users
         get_week_rate(users, g, mode)
         g.title = "#{mode} week rate"
@@ -49,23 +48,29 @@ module PUBGRateBot
       def get_week_rate(users, g, mode)
         labels = Hash.new
         users.each do |user|
-          date = Date.today-6
-          data = Array.new
+          a_week_ago_date = Date.today-6
+          data = Rate.find_by_sql(["SELECT rates.rate from rates where rates.mode_id = ? and rates.user_id = ? AND rates.create_at BETWEEN ? AND ?;", MODE_HASH[mode], user.id, a_week_ago_date, a_week_ago_date+6])
+          #data = user.rates.where(created_at: [a_week_ago_date..a_week_ago_date+6])
+          #7.times do |i|
+            #rate = user.rates.where(["create_at = ? and mode_id = ?", date, MODE_HASH[mode]]).last
+
+          #  if rate.nil?
+          #    data << nil
+          #  else
+          #    if rate.rate == 0
+          #      data << nil
+          #    else
+          #      data << rate.rate
+          #    end
+          #  end
+          #  #data << (rate.nil? ? nil : rate.rate)
+          #
+          #  date += 1
+          #end
           7.times do |i|
-            rate = user.rates.where(["create_at = ? and mode_id = ?", date, MODE_HASH[mode]]).last
-            if rate.nil?
-              data << nil
-            else
-              if rate.rate == 0
-                data << nil
-              else
-                data << rate.rate
-              end
-            end
-            #data << (rate.nil? ? nil : rate.rate)
-            labels.store(i, date.strftime("%m/%d"))
-            date += 1
+            labels.store(i, (a_week_ago_date+i).strftime("%m/%d"))
           end
+          data.map!{|item| item[:rate]}
           g.data(user.name, data)
         end
         g.labels = labels
