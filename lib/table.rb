@@ -1,17 +1,13 @@
 require 'active_record'
-require 'date'
 require_relative '../models/server'
 require_relative '../models/server_user'
 require_relative '../models/user'
 require_relative '../models/rate'
-require_relative './pubg_api'
-require_relative './shape'
-require_relative './queue'
 
 module PUBGRateBot
   module Table
-    def create(database_name)
-      unless File.exist?(database_name)
+    def create(db_file_dir)
+      unless File.exist?(db_file_dir)
         migrate_tables
       end
     end
