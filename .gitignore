@@ -62,3 +62,7 @@ Gemfile.lock
 
 ## log file
 /log/*
+
+/.idea/*
+
+/image/*

@@ -1,7 +1,7 @@
 require 'gruff'
 require_relative '../models/server'
 require_relative '../models/user'
-require_relative '../models/rate'
+require_relative '../models/rank_point'
 
 module PUBGRateBot
   class CreateGruff

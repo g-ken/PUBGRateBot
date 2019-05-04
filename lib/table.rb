@@ -1,66 +1,65 @@
 require 'active_record'
-require_relative '../models/server'
-require_relative '../models/server_user'
-require_relative '../models/user'
-require_relative '../models/rate'
 
 module PUBGRateBot
   module Table
-    def create(db_file_dir)
-      unless File.exist?(db_file_dir)
-        migrate_tables
+    class << self
+      def migrate
+        create_servers_table
+        create_servers_users_table
+        create_users_table
+        create_user_details_table
+        create_rates_table
+        create_seasons_table
       end
-    end
 
-    private
-    def migrate_tables
-      create_servers_table
-      create_servers_users_table
-      create_users_table
-      create_rates_table
-      create_seasons_table
-    end
-
-    def create_servers_table
-      ActiveRecord::Migration.create_table :servers do |t|
-        t.string :server_id
+      private
+      def create_servers_table
+        ActiveRecord::Migration.create_table :servers do |t|
+          t.string :server_id
+        end
       end
-    end
 
-    def create_servers_users_table
-      ActiveRecord::Migration.create_table :servers_users, id: false do |t|
-        t.belongs_to :server, index: true
-        t.belongs_to :user, index: true
+      def create_servers_users_table
+        ActiveRecord::Migration.create_table :servers_users, id: false do |t|
+          t.belongs_to :server, index: true
+          t.belongs_to :user, index: true
+        end
       end
-    end
 
-    def create_users_table
-      ActiveRecord::Migration.create_table :users do |t|
-        t.string :name
-        t.string :player_id
-        t.date :create_at
+      def create_users_table
+        ActiveRecord::Migration.create_table :users do |t|
+          t.date   :created_at
+        end
       end
-    end
 
-    def create_rates_table
-      ActiveRecord::Migration.create_table :rates do |t|
-        t.belongs_to :user, index: true
-        t.belongs_to :season
-        t.integer :rate
-        t.integer :mode_id
-        t.date :create_at
+      def create_user_details_table
+        ActiveRecord::Migration.create_table :details do |t|
+          t.belongs_to :user, index: true
+          t.string :player_name
+          t.string :account_id
+        end
       end
-    end
 
-    def create_seasons_table
-      ActiveRecord::Migration.create_table :seasons do |t|
-        t.string :season_id
+      def create_rates_table
+        ActiveRecord::Migration.create_table :rank_points do |t|
+          t.belongs_to :user, index: true
+          t.belongs_to :season, index: true
+          t.float   :point
+          t.integer :mode_id
+          t.date    :created_at
+        end
       end
-    end
 
-    def create_discords_table
-      ActiveRecord::Migration.create_table :discords do |t|
-        t.string :discord_id
+      def create_seasons_table
+        ActiveRecord::Migration.create_table :seasons do |t|
+          t.string :season_id
+        end
+      end
+
+      def create_discords_table
+        ActiveRecord::Migration.create_table :discords do |t|
+          t.string :discord_id
+        end
       end
     end
   end

@@ -1,9 +1,15 @@
-require_relative 'table'
-require_relative 'pubg_api'
-require_relative '../models/rate'
-require_relative '../models/user'
+require_relative '../lib/table_controller'
 
 module PUBGRateBot
+  class JobRunner
+    def initialize
+    end
+
+    def update_rate
+
+    end
+  end
+
   class ThreadAction
     class << self
       def five_minute_update_user_rate
