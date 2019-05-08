@@ -51,8 +51,8 @@ Gemfile.lock
 .rvmrc
 
 # Ignore the default SQLite database.
-/db/*.sqlite3
-/db/*.sqlite3-journal
+/db/*
+!.gitkeep
 
 /*.png
 
@@ -62,7 +62,11 @@ Gemfile.lock
 
 ## log file
 /log/*
+!.gitignore
 
+## rubymine setting file
 /.idea/*
 
+## img directory
 /image/*
+!.gitkeep
